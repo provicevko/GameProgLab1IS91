@@ -5,34 +5,35 @@ using UnityEngine;
 
 public class Block : MonoBehaviour
 {
-    //player must have a rigidbody2D and a box colider
-    private const float Speed = 7f;
-    private Rigidbody2D _rigidbody2D;
+    private const float MoveSpeedValue = 5f;
+    private const float JumpForceValue = 5f;
+    private const string HorizontalAxisName = "Horizontal";
     
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private Rigidbody2D _rigidbody2D;
+    private Vector2 _movingForce;
+    private Vector2 _jumpForce;
 
     private void Awake()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
+        _jumpForce = new Vector2(0f, JumpForceValue);
     }
-
-    // Update is called once per frame
-    void Update()
+    
+    private void Update()
     {
-        Jump();
-        var movement = new Vector3(Input.GetAxis("Horizontal"), 0f, 0f);
-        transform.position += movement * Time.deltaTime * Speed;
-    }
+        _movingForce.x = Input.GetAxis(HorizontalAxisName);
 
-    private void Jump()
-    {
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            _rigidbody2D.AddForce(new Vector2(0f, 5f), ForceMode2D.Impulse);
+            _rigidbody2D.AddForce(_jumpForce, ForceMode2D.Impulse);
+        }
+    }
+    
+    private void FixedUpdate()
+    {
+        if (_movingForce != Vector2.zero)
+        {
+            transform.Translate(MoveSpeedValue * Time.fixedDeltaTime * _movingForce);
         }
     }
 }   
