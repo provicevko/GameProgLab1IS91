@@ -18,7 +18,11 @@ public class Block : MonoBehaviour
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _jumpForce = new Vector2(0f, JumpForceValue);
     }
-    
+
+    private void Start()
+    {
+    }
+
     private void Update()
     {
         _movingForce.x = Input.GetAxis(HorizontalAxisName);
