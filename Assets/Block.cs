@@ -35,9 +35,6 @@ public class Block : MonoBehaviour
     
     private void FixedUpdate()
     {
-        if (_movingForce != Vector2.zero)
-        {
-            transform.Translate(MoveSpeedValue * Time.fixedDeltaTime * _movingForce);
-        }
+        transform.Translate(MoveSpeedValue * Time.fixedDeltaTime * _movingForce);
     }
 }   
